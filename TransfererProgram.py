@@ -24,21 +24,24 @@ sleep(2)
 
 if senha_digitada == senha_real:
     print("---------------------------------")
-    sleep(1)
     print("|", "\033[1;32m         SENHA ACEITA\033[m", "        |")
-    sleep(1)
     print("---------------------------------")
 
     notification.notify(
         title = "Mensagem:",
-        message = "Bem-Vindo",
+        message = "Bem-Vindo.",
         app_icon = "",
         timeout = 10
     )
 
 if senha_digitada != senha_real:
     print("---------------------------------")
-    sleep(1)
     print("|", "\033[1;31m         SENHA NEGADA\033[m", "        |")
-    sleep(1)
     print("---------------------------------")
+
+    notification.notify(
+        title = "Aviso:",
+        message = "Intruso detectado.",
+        app_icon = "",
+        timeout = 10
+    )
