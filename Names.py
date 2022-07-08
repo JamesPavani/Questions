@@ -6,6 +6,7 @@ import os
 senha_real = "123"
 contador_nomes = 0
 lista_nomes = []
+maior_palavra = ""
 
 os.system("cls")
 sleep(2)
@@ -57,6 +58,11 @@ if senha_usuario == senha_real:
         pergunta = str(input("|Quer digitar outro Nome? "))[0].upper()
         contador_nomes += 1
         adicionar = lista_nomes.append(nome_digitado)
+        if contador_nomes == 1:
+            maior_palavra = nome_digitado
+        else:
+            if len(nome_digitado) > len(maior_palavra):
+                maior_palavra = nome_digitado
 
         if pergunta == "S":
             os.system("cls")
@@ -74,6 +80,25 @@ if senha_usuario == senha_real:
             os.system("cls")
 
             sleep(2)
+
+            print("-----------------------------------")
+            print("|          NOMES DIGITADOS        |")
+            print("-----------------------------------")
+            sleep(1)
+
+            print(" ")
+
+            sleep(2)
+
+            print("-" * (len(maior_palavra) + 8))
+            sleep(1)
+
+            for n in lista_nomes:
+                print("|", f"  {n: ^{len(maior_palavra)}}", "  |")
+                sleep(1)
+                print("-" * (len(maior_palavra) + 8))
+                sleep(1)
+            sleep(1)
             break
 
 if senha_usuario != senha_real:
