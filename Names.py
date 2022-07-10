@@ -3,7 +3,7 @@ from maskpass import askpass
 from plyer import notification
 import os
 
-senha_real = "123"
+senha_real = "Carmack93"
 contador_nomes = 0
 lista_nomes = []
 maior_palavra = ""
@@ -64,6 +64,21 @@ if senha_usuario == senha_real:
             if len(nome_digitado) > len(maior_palavra):
                 maior_palavra = nome_digitado
 
+        while pergunta != "S" and pergunta != "N":
+            sleep(1)
+            print(" ")
+            sleep(2)
+
+            print("-------------------------------")
+            print("|", "           \033[31mERRO\033[m", "            |")
+            print("-------------------------------")
+            sleep(1)
+            print("\033[31m|COMANDO INVÁLIDO\033[m")
+            sleep(1)
+            print("\033[31m|RESPONDA DE NOVO!\033[m")
+            sleep(1)
+            pergunta = str(input("|Quer digitar outro Nome? "))[0].upper()
+
         if pergunta == "S":
             os.system("cls")
 
@@ -99,6 +114,34 @@ if senha_usuario == senha_real:
                 print("-" * (len(maior_palavra) + 8))
                 sleep(1)
             sleep(1)
+
+            print(" ")
+
+            sleep(2)
+
+            print("------------------------------" + "-" * len(maior_palavra))
+            sleep(1)
+            print(f"|Maior nome digitado: {maior_palavra}.      |")
+            sleep(1)
+            print("------------------------------" + "-" * len(maior_palavra))
+            sleep(1)
+
+            print(" ")
+
+            sleep(1)
+            print("----------------------------------" + "-" * len(str(contador_nomes)))
+            sleep(1)
+            print(f"|Quantidade de nomes digitados: {contador_nomes}.|")
+            sleep(1)
+            print("----------------------------------" + "-" * len(str(contador_nomes)))
+            sleep(5)
+
+            os.system("cls")
+
+            sleep(1)
+            print("-----------------------------------")
+            print("|        PROGRAMA ENCERRADO       |")
+            print("-----------------------------------")
             break
 
 if senha_usuario != senha_real:
