@@ -22,13 +22,16 @@ resposta_sim = str("|Oráculo: Bem, me deixe analisar a pergunta....       |\n"
                    "|Oráculo: É uma pergunta intrigante.                  |\n"
                    "|Oráculo: Mas, de acordo com a minha visão do futuro! |\n"
                    "|Oráculo: A resposta é...                             |\n"
-                   "|Oráculo: \033[1;34mSIM\033[m!                        |\n")
+                   "|Oráculo: \033[1;34mSIM!\033[m                                        |\n")
 
 resposta_nao = str("|Oráculo: Bem, me deixe analisar a pergunta....       |\n"
                    "|Oráculo: É uma pergunta intrigante.                  |\n"
                    "|Oráculo: Mas, de acordo com a minha visão do futuro! |\n"
                    "|Oráculo: A resposta é...                             |\n"
-                   "|Oráculo: \033[1;31mNÃO\033[m!                        |\n")
+                   "|Oráculo: \033[1;31mNÃO!\033[m                                        |\n")
+
+erro = str("\033[1;31mNÃO ENTENDI!!!!!\033[m\n"
+           "\033[1;31mPOR FAVOR, DIGITE DE NOVO!!\033[m\n")
 
 os.system("cls")
 
@@ -42,7 +45,7 @@ for l in linha:
 for d in dialogo_oraculo:
     sys.stdout.write(d)
     sys.stdout.flush()
-    sleep(0.2)
+    sleep(0.15)
 
 for l in linha:
     sys.stdout.write(l)
@@ -55,17 +58,18 @@ os.system("cls")
 
 sleep(1)
 
+shuffle(pensando)
+escolha = choice(pensando)
+
 while True:
 
     pergunta = str(input("\033[34mDigite a sua pergunta para o \033[1;34mOráculo\033[m\033[34m:\033[m "))
+
     sleep(1)
 
     os.system("cls")
 
     sleep(1)
-
-    shuffle(pensando)
-    escolha = choice(pensando)
 
     for l in linha:
         sys.stdout.write(l)
@@ -100,18 +104,25 @@ while True:
 
     while continuar != "S" and continuar != "N":
         os.system("cls")
+        sleep(1)
 
-        print("\033[1;31mNÃO ENTENDI!!!!!\033[m")
-        sleep(1)
-        print("\033[1;31mPOR FAVOR, DIGITE DE NOVO!!\033[m")
-        sleep(1)
+        for e in erro:
+            sys.stdout.write(e)
+            sys.stdout.flush()
+            sleep(0.1)
+
         continuar = str(input("\033[1;31mQuer digitar outra pergunta? \033[m")).strip().upper()[0]
         sleep(1)
 
     if continuar == "S":
         os.system("cls")
+        escolha = choice(pensando)
 
     if continuar == "N":
+        os.system("cls")
+
+        sleep(1)
+
         for l in linha:
             sys.stdout.write(l)
             sys.stdout.flush()
@@ -128,3 +139,9 @@ while True:
             sleep(0.1)
 
         break
+
+sleep(1)
+
+os.system("cls")
+
+sleep(2)
