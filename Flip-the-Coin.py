@@ -1,81 +1,78 @@
 import PySimpleGUI as sg
-from time import sleep
-from random import choice
+from random import choice, shuffle
 
-CARA = str("Cara")
-COROA = str("Coroa")
+def escolha():
+    sg.theme("Reddit")
 
-lista = [CARA, COROA]
-resultado = choice(lista)
+    layout_escolha = [
+        [sg.Text("Escolha:")],
+        [sg.Button("CARA")],
+        [sg.Button("COROA")]
+    ]
 
-sg.theme("Reddit")
+    return sg.Window("Escolha", layout_escolha, finalize = True)
 
-escolha = [
-    [sg.Text("Escolha:"), sg.Button("CARA")],
-    [sg.Text("        "), sg.Button("COROA")]
-]
+def giro():
+    sg.theme("Reddit")
 
-giro = [
-    [sg.Button("Aperte para girar a moeda")]
-]
+    layout_giro = [
+        [sg.Button("Aperte para girar a moeda")]
+    ]
 
-de_novo = [
-    [sg.Text("Deseja ir de novo?"), sg.Button("SIM"), sg.Button("NÃO")]
-]
+    return sg.Window("Giro", layout_giro, finalize = True)
 
-janela_escolha = sg.Window("CARA OU COROA", escolha)
-janela_giro = sg.Window("CARA OU COROA", giro)
-janela_de_novo = sg.Window("De novo?", de_novo)
+def de_novo():
+    sg.theme("Reddit")
+
+    layout_de_novo = [
+        [sg.Text("Deseja ir girar de novo?"), sg.Button("SIM"), sg.Button("NÃO")]
+    ]
+
+    return sg.Window("De novo?", layout_de_novo, finalize = True)
+
+janela1, janela2, janela3 = escolha(), None, None
 
 while True:
-    events1, values1 = janela_escolha.read()
-    events2, values2 = janela_giro.read()
-    events3, values3 = janela_de_novo()
 
-    janela_giro.hide()
-    janela_de_novo.hide()
+    window, events, values= sg.read_all_windows()
 
-    if events1 == "CARA" or events1 == "COROA":
-        janela_escolha.hide()
-        sleep(1)
-        janela_giro.un_hide()
+    if window == janela1 and events == "CARA" or window == janela1 and events == "COROA":
+        janela1.hide()
+        eventos = events
+        janela2 = giro()
 
-        if events2 == "Aperte para girar a moeda":
-            janela_giro.hide()
-            sleep(1)
+    if window == janela2 and events == "Aperte para girar a moeda":
+        janela2.hide()
 
-            CARA = str("Cara")
-            COROA = str("Coroa")
+        lista = ["Cara", "Coroa"]
+        shuffle(lista)
+        escolha = choice(lista)
 
-            lista = [CARA, COROA]
-            resultado = choice(lista)
+        if escolha == "Cara":
+            sg.popup("CARA")
+            if eventos == "CARA":
+                sg.popup("VOCÊ GANHOU")
+            if eventos == "COROA":
+                sg.popup("VOCÊ PERDEU")
 
-            if resultado == CARA:
-                sg.popup("CARA")
+        if escolha == "Coroa":
+            sg.popup("COROA")
+            if eventos == "COROA":
+                sg.popup("VOCÊ GANHOU")
+            if eventos == "CARA":
+                sg.popup("VOCÊ PERDEU")
 
-            else:
-                sg.popup("COROA")
+        janela3 = de_novo()
 
-            sleep(1)
+    if window == janela3 and events == "SIM":
+        janela3.hide()
+        janela1.un_hide()
 
-            if events1 == "CARA" and resultado == COROA or events1 == "COROA" and resultado == CARA:
-                sg.popup("Computador ganhou")
+    if window == janela1 and events == sg.WIN_CLOSED:
+        break
 
-            if events1 == "CARA" and resultado == CARA or events1 == "COROA" and resultado == COROA:
-                sg.popup("Você ganhou")
+    if window == janela2 and events == sg.WIN_CLOSED:
+        break
 
-            sleep(1)
-
-            janela_de_novo.un_hide()
-
-            if events3 == "SIM":
-                sleep(1)
-                janela_escolha.un_hide()
-
-            if events3 == "NÃO":
-                sleep(1)
-                break
-sleep(1)
-janela_escolha.close()
-janela_giro.close()
-janela_de_novo.close()
+    if window == janela3 and events == "NÃO":
+        break
