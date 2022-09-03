@@ -1,4 +1,4 @@
-from random import choice
+from random import choice, shuffle
 import PySimpleGUI as sg
 from time import sleep
 import os
@@ -33,6 +33,28 @@ janela1, janela2 = Pergunta(), None
 
 while True:
     window, events, values = sg.read_all_windows()
+
+    if window == janela1 and events == "RESPOSTA":
+        janela1.hide()
+        sleep(1)
+
+        escolhendo = ["SIM", "NÃO"]
+        shuffle(escolhendo)
+        escolha = choice(escolhendo)
+
+        sg.popup(f"{escolha}")
+        sleep(1)
+
+        janela2 = Outra()
+
+    if window == janela2 and events == "SIM":
+        janela2.hide()
+        sleep(1)
+        janela1.un_hide()
+
+        escolhendo = ["SIM", "NÃO"]
+        shuffle(escolhendo)
+        escolha = choice(escolhendo)
 
     if window == janela1 and events == sg.WIN_CLOSED or window == janela1 and events == "SAIR" or window == janela2 and events == sg.WIN_CLOSED or window == janela2 and events == "NÃO":
         break
